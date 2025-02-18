@@ -5,8 +5,10 @@ import base64
 import argparse
 
 def main():
-    parser = argparse.ArgumentParser(description="Converter gitea.db credentials in hashcat / John The Ripper format")
+    parser = argparse.ArgumentParser(description = "Converter gitea.db credentials in hashcat / John The Ripper format",\
+                                     epilog = "Author: CyberRavenMan")
     parser.add_argument("--path", help="path to 'gitea.db' file", required = True)
+    parser.add_argument("--outfile", help="name of file to save hashes", required = False)
     args = parser.parse_args()
     try:
         cursor = (sqlite3.connect(args.path)).cursor()
@@ -23,7 +25,11 @@ def main():
             passwd = bytes.fromhex(row[3])
             salt_base64 = base64.b64encode(salt).decode("utf-8")
             passwd_base64 = base64.b64encode(passwd).decode("utf-8")
-            print(f"[+]: {name}:sha256:{iterations}:{salt_base64}:{passwd_base64}")
+            hash_value = f"{name}:sha256:{iterations}:{salt_base64}:{passwd_base64}\n"
+            if args.outfile:
+                with open(args.outfile, "a") as fd:
+                    fd.write(hash_value)
+            print(f"[+]: {hash_value}", end = "")
         print("-" * 45)
         print("[+]: Done! Good luck!")
     except Exception as err:
