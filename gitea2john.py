@@ -5,7 +5,7 @@ import base64
 import argparse
 
 def main():
-    parser = argparse.ArgumentParser(description = "Converter gitea.db credentials in hashcat / John The Ripper format",\
+    parser = argparse.ArgumentParser(description = "Converter gitea.db credentials in HashCat format",\
                                      epilog = "Author: CyberRavenMan")
     parser.add_argument("--path", help="path to 'gitea.db' file", required = True)
     parser.add_argument("--outfile", help="name of file to save hashes", required = False)
