@@ -13,7 +13,7 @@ def main():
     try:
         cursor = (sqlite3.connect(args.path)).cursor()
         cursor.execute("SELECT name,passwd_hash_algo,salt,passwd FROM user")
-        print(f"[!]: Usage with hashcat mode (-m) 10900 for attack and specifying --username to take into account the username of the hash owners")
+        print(f"[!]: Usage with hashcat mode (-m) 10900 for attack and specifying '--user' to take into account the username of the hash owners")
         print("-" * 45)
         for row in cursor.fetchall():
             if "pbkdf2" in row[1]:
